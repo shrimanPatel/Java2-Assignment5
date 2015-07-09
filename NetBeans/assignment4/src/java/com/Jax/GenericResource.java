@@ -81,6 +81,33 @@ public class GenericResource {
         return productObj;
     }
 
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/post")
+    public void createProduct(String content) throws ParseException, SQLException {
+        JSONParser parser = new JSONParser();
+        JSONObject json = (JSONObject) parser.parse(content);
+
+        Object id = json.get("id");
+        String newProductID = id.toString();
+        int productID = Integer.parseInt(newProductID);
+
+        Object newName = json.get("newName");
+        String name = newName.toString();
+
+        Object newDescription = json.get("newDescription");
+        String description = newDescription.toString();
+
+        Object qty = json.get("qty");
+        String newQty = qty.toString();
+        int quantity = Integer.parseInt(newQty);
+
+        Statement stmt = con.createStatement();
+        String query = "INSERT INTO products VALUES('" + productID + "','" + newName + "','" + newDescription + "','" + quantity + "')";
+        stmt.executeUpdate(query);
+    }
+
     /**
      * PUT method for updating or creating an instance of GenericResource
      *
