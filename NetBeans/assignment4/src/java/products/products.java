@@ -10,10 +10,22 @@ package products;
  * @author Shriman
  */
 public class products {
+
     private int productID;
     private String name;
     private String description;
     private int quantity;
+
+    public products() {
+
+    }
+
+    public products(int productID, String name, String description, int qty) {
+        this.productID = productID;
+        this.name = name;
+        this.description = description;
+        this.quantity = qty;
+    }
 
     public int getProductID() {
         return productID;
