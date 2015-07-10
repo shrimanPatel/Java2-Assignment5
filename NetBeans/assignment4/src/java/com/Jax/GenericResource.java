@@ -19,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.core.MediaType;
 import org.json.simple.JSONObject;
@@ -117,5 +118,32 @@ public class GenericResource {
     @PUT
     @Consumes("application/xml")
     public void putXml(String content) {
+    }
+    
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/delete")
+    public void deleteProduct(String content) throws ParseException, SQLException {
+        JSONParser parser = new JSONParser();
+        JSONObject json = (JSONObject) parser.parse(content);
+
+        Object id = json.get("id");
+        String newProductID = id.toString();
+        int productID = Integer.parseInt(newProductID);
+
+        Object newName = json.get("newName");
+        String name = newName.toString();
+
+        Object newDescription = json.get("newDescription");
+        String description = newDescription.toString();
+
+        Object qty = json.get("qty");
+        String newQty = qty.toString();
+        int quantity = Integer.parseInt(newQty);
+
+        Statement stmt = con.createStatement();
+        String query = "DELETE FROM products WHERE productID =" + productID;
+        stmt.executeUpdate(query);
     }
 }
