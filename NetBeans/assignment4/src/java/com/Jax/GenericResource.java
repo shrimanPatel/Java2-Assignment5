@@ -125,6 +125,7 @@ public class GenericResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/delete")
     public void deleteProduct(String content) throws ParseException, SQLException {
+        
         JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) parser.parse(content);
 
